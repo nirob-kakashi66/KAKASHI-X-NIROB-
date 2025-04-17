@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Node.js Bot CI
 
 on:
   push:
@@ -26,8 +26,5 @@ jobs:
       - name: Fix vulnerabilities automatically
         run: npm audit fix || true
 
-      - name: Build project
-        run: npm run build
-
-      - name: Start app (optional - use only if needed)
-        run: npm start
+      - name: Start the bot (optional, test only)
+        run: npm run start
