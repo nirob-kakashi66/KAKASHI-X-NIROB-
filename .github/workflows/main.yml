@@ -2,23 +2,32 @@ name: Node.js CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'npm'  # optional: cache npm dependencies
+          cache: 'npm'
 
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
 
-      - run: npm run build # or "npm start" if that’s your entry script
+      - name: Fix vulnerabilities automatically
+        run: npm audit fix || true
+
+      - name: Build project
+        run: npm run build
+
+      - name: Start app (optional - use only if needed)
+        run: npm start
